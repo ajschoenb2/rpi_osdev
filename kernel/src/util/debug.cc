@@ -27,14 +27,14 @@ void Debug::printf(const char* fmt, ...) {
 }
 
 void Debug::shutdown() {
-    printf("| core %d requested shutdown\n", getCpu());
+    printf("| core %d requested shutdown\n", getCPU());
     printf("| system shutdown\n");
     _shutdown();
 }
 
 void Debug::vpanic(const char* fmt, va_list ap) {
     vprintf(fmt, ap);
-    printf("| processor %d halting\n", getCpu());
+    printf("| processor %d halting\n", getCPU());
     printf("| system shutdown\n");
     _shutdown();
 }

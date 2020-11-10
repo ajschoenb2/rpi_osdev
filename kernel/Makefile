@@ -45,4 +45,8 @@ $(foreach directory,$(sort $(dir $(SRCS))),$(eval $(call DEFINE_COMPILE_RULES,$(
 kernel8.img : $(SRC_DIR)/link.ld Makefile $(OFILES)
 	@echo "producing    kernel8.img"
 	@mkdir -p build
-	$(ARMGNU)-gcc -Wl,--build-id=none -T $(SRC_DIR)/link.ld -o $(BUILD_DIR)/kernel8.elf -ffreestanding $(OPT_LVL) -nostdlib $(OFILES)
+	# $(ARMGNU)-gcc -Wl,--build-id=none -T $(SRC_DIR)/link.ld -o $(BUILD_DIR)/kernel8.elf -ffreestanding $(OPT_LVL) -nostdlib $(OFILES)
+	$(ARMGNU)-ld -T $(SRC_DIR)/link.ld -o -N -m aarch64elf -e start -o $(BUILD_DIR)/kernel8.elf $(OFILES)
+	$(ARMGNU)-objcopy $(BUILD_DIR)/kernel8.elf -O binary $(BUILD_DIR)/kernel8.bin
+	dd if=$(BUILD_DIR)/kernel8.bin of=$(BUILD_DIR)/kernel8.img bs=512 conv=sync > /dev/null 2>&1
+	qemu-img resize -f raw $(BUILD_DIR)/kernel8.img 16M

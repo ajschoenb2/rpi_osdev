@@ -21,10 +21,37 @@ delay:
     bne delay
     ret
 
-    .globl getCpu
-getCpu:
+    .globl spin
+spin:
+    yield
+    ret
+
+    .globl getCPU
+getCPU:
     mrs x0, mpidr_el1
     and x0, x0, #0xff
+    ret
+
+    .globl wakeupCPU
+wakeupCPU:
+    mov x2, 0xd8
+    str x1, [x2, x0, lsl #3]
+    sev
+    ret
+
+    .globl getDAIF
+getDAIF:
+    mrs x0, daif
+    ret
+
+    .globl enableIRQ
+enableIRQ:
+    msr daifclr, #2
+    ret
+
+    .globl disableIRQ
+disableIRQ:
+    msr daifset, #2
     ret
 
     .globl _shutdown
@@ -36,6 +63,6 @@ _shutdown:
     str x0, [sp, #8]
     mov x1, sp
     mov w0, #0x18
-_shutdown_loop:
+_shutdownLoop:
     hlt #0xf000
-    b _shutdown_loop
+    b _shutdownLoop
