@@ -1,1 +1,1 @@
-build/mbr.o: src/mbr.S include/kernel/constants.h
+build/mbr.o: src/mbr.S

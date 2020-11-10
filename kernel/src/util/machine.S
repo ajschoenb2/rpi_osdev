@@ -27,8 +27,8 @@ getCpu:
     and x0, x0, #0xff
     ret
 
-    .globl shutdown
-shutdown:
+    .globl _shutdown
+_shutdown:
     mov x1, #0x26
     movk x1, #2, lsl #16
     str x1, [sp, #0]
@@ -36,6 +36,6 @@ shutdown:
     str x0, [sp, #8]
     mov x1, sp
     mov w0, #0x18
-shutdown_loop:
+_shutdown_loop:
     hlt #0xf000
-    b shutdown_loop
+    b _shutdown_loop

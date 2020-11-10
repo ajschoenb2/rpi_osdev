@@ -6,4 +6,6 @@ echo "   target remote localhost:1234"
 echo "   set breakpoint, etc"
 echo "   continue"
 
+echo -e -n "\n\n"
+
 qemu-system-aarch64 -s -S -M raspi3 -m 1024 -nographic -smp 4 --monitor none -serial null -serial stdio -semihosting -kernel kernel/build/kernel8.elf

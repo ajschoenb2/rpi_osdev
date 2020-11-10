@@ -1,5 +1,5 @@
-#ifndef INCLUDE_KERNEL_IO_H_
-#define INCLUDE_KERNEL_IO_H_
+#ifndef INCLUDE_KERNEL_IO_IO_H_
+#define INCLUDE_KERNEL_IO_IO_H_
 
 template<typename T> class OutputStream {
 public:
@@ -11,4 +11,4 @@ public:
     virtual T get() = 0;
 };  // class InputStream
 
-#endif  // INCLUDE_KERNEL_IO_H_
+#endif  // INCLUDE_KERNEL_IO_IO_H_

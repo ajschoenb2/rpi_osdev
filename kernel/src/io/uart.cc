@@ -1,6 +1,6 @@
-#include "kernel/uart.h"
+#include "kernel/io/uart.h"
 
-#include "kernel/machine.h"
+#include "kernel/util/machine.h"
 
 Uart::Uart() {
     uint32_t selector;

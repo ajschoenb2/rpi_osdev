@@ -1,4 +1,3 @@
-    #include "kernel/constants.h"
     .section ".text.boot"
 
     .globl start

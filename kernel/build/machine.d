@@ -1,1 +1,1 @@
-build/machine.o: src/machine.S
+build/machine.o: src/util/machine.S

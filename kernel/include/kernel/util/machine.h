@@ -1,7 +1,7 @@
 #ifndef INCLUDE_KERNEL_MACHINE_H_
 #define INCLUDE_KERNEL_MACHINE_H_
 
-#include "kernel/stdint.h"
+#include "kernel/util/stdint.h"
 
 extern "C" void entry(void);
 
@@ -13,6 +13,6 @@ extern "C" uint32_t get32(uint32_t src);
 extern "C" void delay(uint32_t cycles);
 extern "C" uint64_t getCpu();
 
-extern "C" void shutdown();
+extern "C" void _shutdown();
 
 #endif  // INCLUDE_KERNEL_MACHINE_H_
