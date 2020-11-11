@@ -3,6 +3,7 @@
 #include "kernel/io/uart.h"
 #include "kernel/kernel.h"
 #include "kernel/sync/atomic.h"
+#include "kernel/sync/threads.h"
 #include "kernel/util/debug.h"
 #include "kernel/util/machine.h"
 
@@ -30,7 +31,16 @@ extern "C" void kernelInit(void) {
         Debug::printf("----------------------------------------------------------------\n");
         Debug::printf("| hello, world\n");
 
-        Debug::printf("| waking up other cores...\n");
+        Debug::printf("| initializing heap\n");
+        heapInit(reinterpret_cast<void*>(0x100000), 1 << 20);
+
+        Debug::init(new Uart());
+        Debug::printf("| switched to new UART\n");
+
+        Debug::printf("| initializing threads\n");
+        threadsInit();
+
+        Debug::printf("| waking up other cores\n");
         for (uint64_t id = 0; id < NUM_CORES; id++) {
             if (id != getCPU()) {
                 Debug::printf("| initialize %ld\n", id);
@@ -47,8 +57,10 @@ extern "C" void kernelInit(void) {
 
     uint64_t order = here.addFetch(1);
     if (order == NUM_CORES) {
-        kernelMain();
-        Debug::shutdown();
+        thread([] {
+            kernelMain();
+            Debug::shutdown();
+        });
     }
-    while (true) spin();
+    stop();
 }
